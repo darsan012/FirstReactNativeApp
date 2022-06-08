@@ -11,22 +11,26 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {Employee} from '../Constants/EmployeeData';
 import {useGetLoginMutation} from '../services/loginApi';
+import {emailValidator} from '../utils/formValidator';
 
 const Login = ({navigation}) => {
   const [addUser] = useGetLoginMutation;
   const dispatch = useDispatch();
 
-  const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const submitHandler = () => {
-    if (!userName || !password) {
+  const submitHandler = async () => {
+    if (!email || !password) {
       return Alert.alert(`Please provide all the fields`);
     }
-    console.log(Employee);
-    return navigation.navigate('Profile', {userName});
+    if (!emailValidator(email)) {
+      return Alert.alert(`Invalid email or password`);
+    }
+    const details = await addUser({email, password});
+    // console.log(details);
+    return navigation.navigate('Profile', {userName: email});
   };
   return (
     <SafeAreaView>
@@ -37,8 +41,8 @@ const Login = ({navigation}) => {
           <TextInput
             style={styles.input}
             placeholder="Username"
-            onChangeText={setUserName}
-            value={userName}
+            onChangeText={setEmail}
+            value={email}
           />
           <TextInput
             style={styles.input}
