@@ -11,14 +11,14 @@ import {
 } from 'react-native';
 
 const Login = ({navigation}) => {
-  const [email, setEmail] = useState('');
+  const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
 
   const submitHandler = () => {
-    if (!email || !password) {
+    if (!userName || !password) {
       return Alert.alert(`Please provide all the fields`);
     }
-    return navigation.navigate('Profile', {name: {email}});
+    return navigation.navigate('Profile', {userName});
   };
   return (
     <SafeAreaView>
@@ -29,8 +29,8 @@ const Login = ({navigation}) => {
           <TextInput
             style={styles.input}
             placeholder="Username"
-            onChangeText={setEmail}
-            value={email}
+            onChangeText={setUserName}
+            value={userName}
           />
           <TextInput
             style={styles.input}

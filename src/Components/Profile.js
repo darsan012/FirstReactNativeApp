@@ -1,11 +1,15 @@
-import * as React from 'react';
-import {View, Text} from 'react-native';
+import React from 'react';
+import {View, Text, SafeAreaView, ScrollView} from 'react-native';
 
-const Profile = ({name}) => {
+const Profile = ({route}) => {
   return (
-    <View>
-      <Text>{name}</Text>
-    </View>
+    <SafeAreaView>
+      <ScrollView>
+        <View>
+          <Text>{route.params.userName}</Text>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
