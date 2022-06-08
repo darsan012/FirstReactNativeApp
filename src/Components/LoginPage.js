@@ -9,9 +9,15 @@ import {
   Alert,
   TextInput,
 } from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {Employee} from '../Constants/EmployeeData';
+import {useGetLoginMutation} from '../services/loginApi';
+
 const Login = ({navigation}) => {
+  const [addUser] = useGetLoginMutation;
+  const dispatch = useDispatch();
+
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
 
