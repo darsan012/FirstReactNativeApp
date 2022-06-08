@@ -10,6 +10,7 @@ import {
   TextInput,
 } from 'react-native';
 
+import {Employee} from '../Constants/EmployeeData';
 const Login = ({navigation}) => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -18,6 +19,7 @@ const Login = ({navigation}) => {
     if (!userName || !password) {
       return Alert.alert(`Please provide all the fields`);
     }
+    console.log(Employee);
     return navigation.navigate('Profile', {userName});
   };
   return (

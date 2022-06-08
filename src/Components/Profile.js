@@ -6,7 +6,7 @@ const Profile = ({route}) => {
     <SafeAreaView>
       <ScrollView>
         <View>
-          <Text>{route.params.userName}</Text>
+          <Text>Welcome {route.params.userName}</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
