@@ -5,15 +5,19 @@ import Login from './src/Components/LoginPage';
 import Profile from './src/Components/Profile';
 
 const Stack = createNativeStackNavigator();
+import {Provider} from 'react-redux';
+import {store} from './src/store/store';
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Profile" component={Profile} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Profile" component={Profile} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 };
 

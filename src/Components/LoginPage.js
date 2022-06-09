@@ -13,10 +13,12 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {useGetLoginMutation} from '../services/loginApi';
 import {emailValidator} from '../utils/formValidator';
+import {login} from '../store/slices/userSlice';
 
 const Login = ({navigation}) => {
-  const [addUser] = useGetLoginMutation;
+  const [addUser] = useGetLoginMutation();
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector(state => state.userDetails.isLoggedIn);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -30,6 +32,8 @@ const Login = ({navigation}) => {
     }
     const details = await addUser({email, password});
     // console.log(details);
+    details.data && dispatch(login({...details.data.payload.data}));
+
     return navigation.navigate('Profile', {userName: email});
   };
   return (
@@ -61,7 +65,9 @@ const Login = ({navigation}) => {
             Forgot Password?
           </Text>
 
-          <Button title="Login" onPress={() => submitHandler()} />
+          {isLoggedIn && (
+            <Button title="Login" onPress={() => submitHandler()} />
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>

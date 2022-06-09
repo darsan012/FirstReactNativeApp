@@ -7,10 +7,16 @@ export const loginApi = createApi({
   reducerPath: 'loginApi',
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
-    prepareHeaders: headers => {
-      const token = AsyncStorage.getItem('token');
-      headers.set('Authorization', `Bearer ${token}`);
-      return headers;
+    prepareHeaders: async headers => {
+      try {
+        const token = await AsyncStorage.getItem('token').then(token => {
+          console.log(token);
+        });
+
+        console.log(token, 'token');
+        headers.set('Authorization', `Bearer ${token}`);
+        return headers;
+      } catch (error) {}
     },
   }),
   tagTypes: ['Post'],
