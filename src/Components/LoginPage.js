@@ -33,7 +33,7 @@ const Login = ({navigation}) => {
     const details = await addUser({email, password});
     console.log(details);
     if (!isLoggedIn) {
-      details.data && dispatch(login({...details.data.payload.data}));
+      (await details.data) && dispatch(login({...details.data.payload.data}));
       console.log(details);
     }
   };

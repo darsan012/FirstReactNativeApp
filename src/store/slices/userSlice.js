@@ -8,7 +8,7 @@ const initialState = {
   isLoggedIn: AsyncStorage.getItem('user') ? true : false,
 };
 
-export const userSlice = createSlice({
+const userSlice = createSlice({
   name: 'userDetails',
   initialState,
   reducers: {

@@ -5,8 +5,8 @@ import userReducer from './slices/userSlice';
 
 export const store = configureStore({
   reducer: {
-    userDetails: userReducer,
     [loginApi.reducerPath]: loginApi.reducer,
+    userDetails: userReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(loginApi.middleware),
