@@ -16,8 +16,8 @@ import {emailValidator} from '../utils/formValidator';
 import {login} from '../store/slices/userSlice';
 
 const Login = ({navigation}) => {
-  // const [addUser] = useGetLoginMutation();
-  const {data, error, isLoading, isFetching, isSuccess} = useReposQuery();
+  const [addUser] = useGetLoginMutation();
+  // const {data, error, isLoading, isFetching, isSuccess} = useReposQuery();
   // const dispatch = useDispatch();
   // const isLoggedIn = useSelector(state => state.userDetails.isLoggedIn);
 
@@ -31,21 +31,21 @@ const Login = ({navigation}) => {
     if (!emailValidator(email)) {
       return Alert.alert(`Invalid email or password`);
     }
-    // const details = await addUser({email, password});
-    // console.log(details);
+    const details = await addUser({email, password});
+    console.log(details);
     // details.data && dispatch(login({...details.data.payload.data}));
-    {
-      isLoading && console.log('...loading');
-    }
-    {
-      isFetching && console.log('..isFetching');
-    }
-    {
-      error && console.log(error);
-    }
-    {
-      isSuccess && console.log(data);
-    }
+    // {
+    //   isLoading && console.log('...loading');
+    // }
+    // {
+    //   isFetching && console.log('..isFetching');
+    // }
+    // {
+    //   error && console.log(error);
+    // }
+    // {
+    //   isSuccess && console.log(data);
+    // }
   };
   return (
     <SafeAreaView>
