@@ -11,10 +11,17 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     login: async (state, action) => {
-      state.user = {...action.payload};
-      state.isLoggedIn = true;
-      data = await AsyncStorage.setItem('user', JSON.stringify(action.payload));
-      console.log(data, 'setTokenData');
+      try {
+        state.user = {...action.payload};
+        state.isLoggedIn = true;
+        data = await AsyncStorage.setItem(
+          'user',
+          JSON.stringify(action.payload),
+        );
+        console.log(data, 'setTokenData');
+      } catch (error) {
+        console.log(error, 'k vayo k vayo');
+      }
     },
   },
 });
