@@ -17,9 +17,8 @@ import {login} from '../store/slices/userSlice';
 
 const Login = ({navigation}) => {
   const [addUser] = useGetLoginMutation();
-  // const {data, error, isLoading, isFetching, isSuccess} = useReposQuery();
-  // const dispatch = useDispatch();
-  // const isLoggedIn = useSelector(state => state.userDetails.isLoggedIn);
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector(state => state.userDetails.isLoggedIn);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -33,19 +32,10 @@ const Login = ({navigation}) => {
     }
     const details = await addUser({email, password});
     console.log(details);
-    // details.data && dispatch(login({...details.data.payload.data}));
-    // {
-    //   isLoading && console.log('...loading');
-    // }
-    // {
-    //   isFetching && console.log('..isFetching');
-    // }
-    // {
-    //   error && console.log(error);
-    // }
-    // {
-    //   isSuccess && console.log(data);
-    // }
+    if (!isLoggedIn) {
+      details.data && dispatch(login({...details.data.payload.data}));
+      console.log(details);
+    }
   };
   return (
     <SafeAreaView>
