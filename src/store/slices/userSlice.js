@@ -18,7 +18,6 @@ export const userSlice = createSlice({
           'user',
           JSON.stringify(action.payload),
         );
-        console.log(data, 'setTokenData');
       } catch (error) {
         console.log(error, 'k vayo k vayo');
       }

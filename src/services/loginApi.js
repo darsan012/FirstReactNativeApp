@@ -1,25 +1,23 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {apiRoutes, BASE_URL} from '../config/configRoute';
 
 export const loginApi = createApi({
   reducerPath: 'loginApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
-    prepareHeaders: async headers => {
-      try {
-        const token = await AsyncStorage.getItem('token').then(token => {
-          console.log(token);
-        });
-
-        console.log(token, 'token');
-        headers.set('Authorization', `Bearer ${token}`);
-        return headers;
-      } catch (error) {}
-    },
+    baseUrl: 'https://api.github.com/users/',
+    // prepareHeaders: async headers => {
+    //   try {
+    //     const token = await AsyncStorage.getItem('user');
+    //     console.log(token, 'token');
+    //     headers.set('Authorization', `Bearer ${token}`);
+    //     return headers;
+    //   } catch (error) {
+    //     console.log('some error', error);
+    //   }
+    // },
   }),
-  tagTypes: ['Post'],
   endpoints: builder => ({
     getLogin: builder.mutation({
       query: data => {
@@ -30,7 +28,14 @@ export const loginApi = createApi({
         };
       },
     }),
+    repos: builder.query({
+      query: () => {
+        return {
+          url: apiRoutes.getRepos,
+        };
+      },
+    }),
   }),
 });
 
-export const {useGetLoginMutation} = loginApi;
+export const {useGetLoginMutation, useReposQuery} = loginApi;
