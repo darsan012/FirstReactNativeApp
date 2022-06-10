@@ -15,7 +15,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useGetLoginMutation} from '../services/loginApi';
 import {emailValidator} from '../utils/formValidator';
 import {login} from '../store/slices/userSlice';
-import {NavigationContainer} from '@react-navigation/native';
 
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -28,9 +27,21 @@ const Login = ({navigation}) => {
   //This function runs when there is change on isLoggedIn
   useEffect(() => {
     if (isLoggedIn) {
-      NavigationContainer.navigate('Profile');
+      navigation.navigate('Profile');
+    } else {
+      (async () => {
+        try {
+          const user = JSON.parse(await AsyncStorage.getItem('user'));
+          console.log(user, 'user');
+          if (user) {
+            dispatch(login({...user}));
+          }
+        } catch (error) {
+          console.log(error, 'user effect error');
+        }
+      })(); //() is self calling function
     }
-  });
+  }, [isLoggedIn]); //here isloggedin is used so that function calls when there is change of login state
 
   const submitHandler = async () => {
     if (!email || !password) {
@@ -40,13 +51,18 @@ const Login = ({navigation}) => {
       return Alert.alert(`Invalid email or password`);
     }
     const details = await addUser({email, password});
+    details.error && console.log(details.error);
     console.log(details);
-    if (!isLoggedIn) {
-      data = await AsyncStorage.setItem(
-        'user',
-        JSON.stringify(...details.data.payload.data),
-      );
-      (await details.data) && dispatch(login({...details.data.payload.data}));
+    if (details.data) {
+      try {
+        data = await AsyncStorage.setItem(
+          'user',
+          JSON.stringify(...details.data.payload.data),
+        );
+      } catch (error) {
+        console.log(error);
+      }
+      details.data && dispatch(login({...details.data.payload.data}));
       console.log(details);
     }
   };

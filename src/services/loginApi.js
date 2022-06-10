@@ -9,10 +9,10 @@ export const loginApi = createApi({
     baseUrl: BASE_URL,
     prepareHeaders: async headers => {
       try {
-        const token = await AsyncStorage.getItem('user');
+        const token = JSON.parse(await AsyncStorage.getItem('user'));
         console.log(token, 'token');
-        // headers.set('Authorization', `Bearer ${token}`);
-        // return headers;
+        headers.set('Authorization', `Bearer ${token}`);
+        return headers;
       } catch (error) {
         console.log('some error', error);
       }
@@ -28,14 +28,7 @@ export const loginApi = createApi({
         };
       },
     }),
-    repos: builder.query({
-      query: () => {
-        return {
-          url: apiRoutes.getRepos,
-        };
-      },
-    }),
   }),
 });
 
-export const {useGetLoginMutation, useReposQuery} = loginApi;
+export const {useGetLoginMutation} = loginApi;

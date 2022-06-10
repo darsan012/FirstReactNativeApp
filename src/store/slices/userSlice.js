@@ -9,12 +9,12 @@ const userSlice = createSlice({
   name: 'userDetails',
   initialState,
   reducers: {
-    login: async (state, action) => {
+    login: (state, action) => {
       try {
         state.user = {...action.payload};
         state.isLoggedIn = true;
       } catch (error) {
-        console.log(error, 'k vayo k vayo');
+        console.log(error, 'Error inside user slice');
       }
     },
   },
