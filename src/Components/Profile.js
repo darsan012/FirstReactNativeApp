@@ -7,13 +7,30 @@ import {
   Button,
   StyleSheet,
   Dimensions,
+  FlatList,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {logout} from '../store/slices/userSlice';
 
 const Profile = ({navigation, route}) => {
   const dispatch = useDispatch();
+  const loginData = useSelector(state => state.userDetails.user);
+  console.log(loginData, 'haha');
+  const items = [
+    {
+      text: 'Milk',
+    },
+    {
+      text: 'Eggs',
+    },
+    {
+      text: 'Juice',
+    },
+    {
+      text: 'Cheese',
+    },
+  ];
 
   const logoutHandler = () => {
     AsyncStorage.clear();
@@ -24,11 +41,15 @@ const Profile = ({navigation, route}) => {
     <SafeAreaView>
       <ScrollView>
         <View style={styles.profileContainer}>
-          <Text>Welcome</Text>
+          <Text style={styles.welcomeText}>Welcome</Text>
           <View>
             <Text>Name</Text>
             <Text>Email</Text>
           </View>
+          <FlatList
+            data={items}
+            renderItem={({item}) => <Text>{item.text}</Text>}
+          />
           <Text>Have a nice day!</Text>
           <View>
             <Button title="Logout" onPress={() => logoutHandler()} />
@@ -45,9 +66,11 @@ const styles = StyleSheet.create({
   profileContainer: {
     display: 'flex',
     // flexDirection: 'row',
-    alignItems: 'center',
+    marginHorizontal: 16,
+    paddingTop: 10,
     width: width,
     height: height,
   },
+  welcomeText: {},
 });
 export default Profile;
