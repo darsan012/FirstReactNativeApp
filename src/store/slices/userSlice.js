@@ -16,10 +16,6 @@ const userSlice = createSlice({
       try {
         state.user = {...action.payload};
         state.isLoggedIn = true;
-        data = await AsyncStorage.setItem(
-          'user',
-          JSON.stringify(action.payload),
-        );
       } catch (error) {
         console.log(error, 'k vayo k vayo');
       }

@@ -10,8 +10,9 @@ import {
   TextInput,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {useGetLoginMutation, useReposQuery} from '../services/loginApi';
+import {useGetLoginMutation} from '../services/loginApi';
 import {emailValidator} from '../utils/formValidator';
 import {login} from '../store/slices/userSlice';
 
@@ -33,6 +34,10 @@ const Login = ({navigation}) => {
     const details = await addUser({email, password});
     console.log(details);
     if (!isLoggedIn) {
+      data = await AsyncStorage.setItem(
+        'user',
+        JSON.stringify(...details.data.payload.data),
+      );
       (await details.data) && dispatch(login({...details.data.payload.data}));
       console.log(details);
     }

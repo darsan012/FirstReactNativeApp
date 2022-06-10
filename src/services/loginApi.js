@@ -6,7 +6,7 @@ import {apiRoutes, BASE_URL} from '../config/configRoute';
 export const loginApi = createApi({
   reducerPath: 'loginApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://172.16.25.18:5003/api/',
+    baseUrl: BASE_URL,
     prepareHeaders: async headers => {
       try {
         const token = await AsyncStorage.getItem('user');
