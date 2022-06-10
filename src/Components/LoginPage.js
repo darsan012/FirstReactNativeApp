@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Button,
@@ -15,14 +15,22 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useGetLoginMutation} from '../services/loginApi';
 import {emailValidator} from '../utils/formValidator';
 import {login} from '../store/slices/userSlice';
+import {NavigationContainer} from '@react-navigation/native';
 
 const Login = ({navigation}) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const [addUser] = useGetLoginMutation();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(state => state.userDetails.isLoggedIn);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  //This function runs when there is change on isLoggedIn
+  useEffect(() => {
+    if (isLoggedIn) {
+      NavigationContainer.navigate('Profile');
+    }
+  });
 
   const submitHandler = async () => {
     if (!email || !password) {
