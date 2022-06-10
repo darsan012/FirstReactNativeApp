@@ -7,16 +7,16 @@ export const loginApi = createApi({
   reducerPath: 'loginApi',
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
-    prepareHeaders: async headers => {
-      try {
-        const token = JSON.parse(await AsyncStorage.getItem('user'));
-        console.log(token, 'token');
-        headers.set('Authorization', `Bearer ${token}`);
-        return headers;
-      } catch (error) {
-        console.log('some error', error);
-      }
-    },
+    // prepareHeaders: async headers => {
+    //   try {
+    //     const details = JSON.parse(await AsyncStorage.getItem('user'));
+    //     console.log(details, 'token');
+    //     headers.set('Authorization', `Bearer ${details}`);
+    //     return headers;
+    //   } catch (error) {
+    //     console.log('some error', error);
+    //   }
+    // },
   }),
   endpoints: builder => ({
     getLogin: builder.mutation({

@@ -52,12 +52,11 @@ const Login = ({navigation}) => {
     }
     const details = await addUser({email, password});
     details.error && console.log(details.error);
-    console.log(details);
     if (details.data) {
       try {
         data = await AsyncStorage.setItem(
           'user',
-          JSON.stringify(...details.data.payload.data),
+          JSON.stringify(details.data.payload.data),
         );
       } catch (error) {
         console.log(error);
