@@ -17,8 +17,15 @@ const userSlice = createSlice({
         console.log(error, 'Error inside user slice');
       }
     },
+    logout: (state, action) => {
+      try {
+        state.isLoggedIn = false;
+      } catch (error) {
+        console.log(error, 'Error inside user slice');
+      }
+    },
   },
 });
 
-export const {login} = userSlice.actions;
+export const {login, logout} = userSlice.actions;
 export default userSlice.reducer;

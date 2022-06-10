@@ -27,7 +27,7 @@ const Login = ({navigation}) => {
   //This function runs when there is change on isLoggedIn
   useEffect(() => {
     if (isLoggedIn) {
-      navigation.navigate('Profile');
+      navigation.navigate('Profile', {name: email});
     } else {
       (async () => {
         try {
