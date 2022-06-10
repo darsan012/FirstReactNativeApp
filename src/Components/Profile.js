@@ -5,7 +5,8 @@ import {
   SafeAreaView,
   ScrollView,
   Button,
-  Alert,
+  StyleSheet,
+  Dimensions,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
@@ -13,10 +14,8 @@ import {logout} from '../store/slices/userSlice';
 
 const Profile = ({navigation, route}) => {
   const dispatch = useDispatch();
-  const logoutHandler = () => {
-    console.log('hello');
-    // Alert.alert('yeah');
 
+  const logoutHandler = () => {
     AsyncStorage.clear();
     dispatch(logout());
     navigation.navigate('Login');
@@ -24,13 +23,31 @@ const Profile = ({navigation, route}) => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <View>
+        <View style={styles.profileContainer}>
           <Text>Welcome</Text>
-          <Button title="Logout" onPress={() => logoutHandler()} />
+          <View>
+            <Text>Name</Text>
+            <Text>Email</Text>
+          </View>
+          <Text>Have a nice day!</Text>
+          <View>
+            <Button title="Logout" onPress={() => logoutHandler()} />
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
+const styles = StyleSheet.create({
+  profileContainer: {
+    display: 'flex',
+    // flexDirection: 'row',
+    alignItems: 'center',
+    width: width,
+    height: height,
+  },
+});
 export default Profile;
