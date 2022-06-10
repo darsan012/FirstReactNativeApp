@@ -15,8 +15,8 @@ import {logout} from '../store/slices/userSlice';
 
 const Profile = ({navigation, route}) => {
   const dispatch = useDispatch();
-  const loginData = useSelector(state => state.userDetails.user);
-  console.log(loginData, 'haha');
+  const loginData = useSelector(state => state.userDetails.user.accessToken);
+  console.log(typeof loginData, 'hahajjaja');
   const items = [
     {
       text: 'Milk',
@@ -46,10 +46,10 @@ const Profile = ({navigation, route}) => {
             <Text>Name</Text>
             <Text>Email</Text>
           </View>
-          <FlatList
+          {/* <FlatList
             data={items}
             renderItem={({item}) => <Text>{item.text}</Text>}
-          />
+          /> */}
           <Text>Have a nice day!</Text>
           <View>
             <Button title="Logout" onPress={() => logoutHandler()} />
