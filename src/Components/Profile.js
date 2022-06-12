@@ -13,11 +13,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch, useSelector} from 'react-redux';
 import {useLazyGetUserDetailsQuery} from '../services/employeeApi';
 import {logout} from '../store/slices/authSlice';
+import {getUserData} from '../store/slices/userSlice';
 
 const Profile = ({navigation, route}) => {
   const [getUserDetails, response] = useLazyGetUserDetailsQuery();
   const dispatch = useDispatch();
   const loginData = useSelector(state => state.authDetails.user);
+  const userData = useSelector(state => state.userDetails.userDetails);
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -30,8 +32,21 @@ const Profile = ({navigation, route}) => {
   }, [getUserDetails]);
 
   const data = response.data && response.data.payload.data;
+  // console.log(response.data.code);
+  // console.log(data);
 
-  data && console.log(data, 'response data');
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        await (data && dispatch(getUserData({...data})));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getData();
+  }, [data, userData]);
+
+  userData && console.log(userData);
   // const items = [
   //   {
   //     text: 'Milk',

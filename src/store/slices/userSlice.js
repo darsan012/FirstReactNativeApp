@@ -2,11 +2,17 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const userSlice = createSlice({
   name: 'userDetails',
-  initialState: null,
+  initialState: {
+    userData: null,
+  },
   reducers: {
     getUserData(state, actions) {
-      state.user = {...actions.payload};
-      console.log(state);
+      try {
+        state.userData = {...actions.payload};
+        console.log(state.userData, 'on slice');
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 });
