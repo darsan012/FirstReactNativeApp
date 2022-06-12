@@ -32,7 +32,6 @@ const Login = ({navigation}) => {
       (async () => {
         try {
           const user = JSON.parse(await AsyncStorage.getItem('user'));
-          console.log(user, 'user');
           if (user) {
             dispatch(login({...user}));
           }

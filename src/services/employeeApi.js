@@ -1,27 +1,25 @@
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/dist/query';
-
-import {apiRoutes, BASE_URL} from '../config/configRoute';
+import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import {apiRoutes} from '../config/configRoute';
 
 export const employeeApi = createApi({
   reducerPath: 'employeeApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
-    prepareHeaders: async headers => {
-      try {
-        const token = useSelector(state => state.userDetails.user.accessToken);
-        console.log(token, 'Token');
-        headers.set('Authorization', `Bearer ${token}`);
-        return headers;
-      } catch (error) {
-        console.log(error, 'error');
-      }
-    },
+    baseUrl: apiRoutes.BASE_URL,
   }),
   endpoints: builder => ({
-    getEmployee: builder.query({
-      query: id => apiRoutes.getEmployee + id,
+    getUserDetails: builder.query({
+      query: ({id, token}) => {
+        console.log('hello');
+        return {
+          url: apiRoutes.getUser + id,
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+      },
     }),
   }),
 });
 
-export const {useGetEmployeeQuery} = employeeApi;
+export const {useLazyGetUserDetailsQuery} = employeeApi;

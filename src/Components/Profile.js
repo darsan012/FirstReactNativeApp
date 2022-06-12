@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -11,26 +11,31 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch, useSelector} from 'react-redux';
+import {useLazyGetUserDetailsQuery} from '../services/employeeApi';
 import {logout} from '../store/slices/userSlice';
 
 const Profile = ({navigation, route}) => {
+  const [getUserDetails, response] = useLazyGetUserDetailsQuery();
   const dispatch = useDispatch();
-  const loginData = useSelector(state => state.userDetails.user.accessToken);
-  console.log(typeof loginData, 'hahajjaja');
-  const items = [
-    {
-      text: 'Milk',
-    },
-    {
-      text: 'Eggs',
-    },
-    {
-      text: 'Juice',
-    },
-    {
-      text: 'Cheese',
-    },
-  ];
+  const loginData = useSelector(state => state.userDetails.user);
+  useEffect(() => {
+    getUserDetails({id: loginData.id, token: loginData.accessToken});
+  }, [getUserDetails]);
+  console.log(response, 'response data');
+  // const items = [
+  //   {
+  //     text: 'Milk',
+  //   },
+  //   {
+  //     text: 'Eggs',
+  //   },
+  //   {
+  //     text: 'Juice',
+  //   },
+  //   {
+  //     text: 'Cheese',
+  //   },
+  // ];
 
   const logoutHandler = () => {
     AsyncStorage.clear();
