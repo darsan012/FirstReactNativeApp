@@ -12,16 +12,26 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch, useSelector} from 'react-redux';
 import {useLazyGetUserDetailsQuery} from '../services/employeeApi';
-import {logout} from '../store/slices/userSlice';
+import {logout} from '../store/slices/authSlice';
 
 const Profile = ({navigation, route}) => {
   const [getUserDetails, response] = useLazyGetUserDetailsQuery();
   const dispatch = useDispatch();
-  const loginData = useSelector(state => state.userDetails.user);
+  const loginData = useSelector(state => state.authDetails.user);
   useEffect(() => {
-    getUserDetails({id: loginData.id, token: loginData.accessToken});
+    const getUser = async () => {
+      try {
+        await getUserDetails({id: loginData.id, token: loginData.accessToken});
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getUser();
   }, [getUserDetails]);
-  console.log(response, 'response data');
+
+  const data = response.data && response.data.payload.data;
+
+  data && console.log(data, 'response data');
   // const items = [
   //   {
   //     text: 'Milk',

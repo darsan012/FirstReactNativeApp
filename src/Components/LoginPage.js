@@ -14,7 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {useGetLoginMutation} from '../services/loginApi';
 import {emailValidator} from '../utils/formValidator';
-import {login} from '../store/slices/userSlice';
+import {login} from '../store/slices/authSlice';
 
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -22,7 +22,7 @@ const Login = ({navigation}) => {
 
   const [addUser] = useGetLoginMutation();
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector(state => state.userDetails.isLoggedIn);
+  const isLoggedIn = useSelector(state => state.authDetails.isLoggedIn);
 
   //This function runs when there is change on isLoggedIn
   useEffect(() => {
