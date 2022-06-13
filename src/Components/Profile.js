@@ -19,7 +19,7 @@ const Profile = ({navigation, route}) => {
   const [getUserDetails, response] = useLazyGetUserDetailsQuery();
   const dispatch = useDispatch();
   const loginData = useSelector(state => state.authDetails.user);
-  const userData = useSelector(state => state.userDetails.userDetails);
+  const userData = useSelector(state => state.userDetails.userData);
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -32,9 +32,6 @@ const Profile = ({navigation, route}) => {
   }, [getUserDetails]);
 
   const data = response.data && response.data.payload.data;
-  // console.log(response.data.code);
-  // console.log(data);
-
   useEffect(() => {
     const getData = async () => {
       try {
@@ -44,9 +41,9 @@ const Profile = ({navigation, route}) => {
       }
     };
     getData();
-  }, [data, userData]);
+  }, [data]);
 
-  userData && console.log(userData);
+  console.log(userData, 'userData');
   // const items = [
   //   {
   //     text: 'Milk',

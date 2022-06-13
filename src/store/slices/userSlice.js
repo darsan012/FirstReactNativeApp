@@ -8,8 +8,7 @@ const userSlice = createSlice({
   reducers: {
     getUserData(state, actions) {
       try {
-        state.userData = {...actions.payload};
-        console.log(state.userData, 'on slice');
+        state.userData = actions.payload;
       } catch (error) {
         console.log(error);
       }
