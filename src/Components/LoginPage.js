@@ -61,7 +61,6 @@ const Login = ({navigation}) => {
         console.log(error);
       }
       details.data && dispatch(login({...details.data.payload.data}));
-      console.log(details);
     }
   };
   return (

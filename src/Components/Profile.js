@@ -8,12 +8,14 @@ import {
   StyleSheet,
   Dimensions,
   FlatList,
+  Image,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch, useSelector} from 'react-redux';
 import {useLazyGetUserDetailsQuery} from '../services/employeeApi';
 import {logout} from '../store/slices/authSlice';
 import {getUserData} from '../store/slices/userSlice';
+import ListItem from './ListItem';
 
 const Profile = ({navigation, route}) => {
   const [getUserDetails, response] = useLazyGetUserDetailsQuery();
@@ -43,21 +45,8 @@ const Profile = ({navigation, route}) => {
     getData();
   }, [data]);
 
-  console.log(userData, 'userData');
-  // const items = [
-  //   {
-  //     text: 'Milk',
-  //   },
-  //   {
-  //     text: 'Eggs',
-  //   },
-  //   {
-  //     text: 'Juice',
-  //   },
-  //   {
-  //     text: 'Cheese',
-  //   },
-  // ];
+  const about = userData && userData.about;
+  about && console.log(about, 'about');
 
   const logoutHandler = () => {
     AsyncStorage.clear();
@@ -66,23 +55,27 @@ const Profile = ({navigation, route}) => {
   };
   return (
     <SafeAreaView>
-      <ScrollView>
-        <View style={styles.profileContainer}>
-          <Text style={styles.welcomeText}>Welcome</Text>
+      {userData && (
+        <ScrollView>
           <View>
-            <Text>Name</Text>
-            <Text>Email</Text>
+            <Image
+              source={{uri: 'https://randomuser.me/api/portraits/men/1.jpg'}}
+              style={styles.img}
+            />
           </View>
-          {/* <FlatList
-            data={items}
-            renderItem={({item}) => <Text>{item.text}</Text>}
-          /> */}
-          <Text>Have a nice day!</Text>
-          <View>
-            <Button title="Logout" onPress={() => logoutHandler()} />
+          <View style={styles.profileContainer}>
+            <Text style={styles.welcomeText}>Welcome {about.name}</Text>
+            <View>
+              <Text>Email: {about.email}</Text>
+              <Text>Cell No: {about.cellNo}</Text>
+            </View>
+            <Text>Have a nice day!</Text>
+            <View>
+              <Button title="Logout" onPress={() => logoutHandler()} />
+            </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 };
@@ -97,6 +90,11 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     width: width,
     height: height,
+  },
+  img: {
+    width: 100,
+    height: 100,
+    borderRadius: 100 / 2,
   },
   welcomeText: {},
 });
